@@ -89,8 +89,8 @@ public:
 
     void setBody(std::string&& body)
     {
-        addHeadValue("Content-Length", std::to_string(body.size()));
         mBody = std::move(body);
+        addHeadValue("Content-Length", std::to_string(body.size()));
     }
 
     void addHeadValue(const std::string& field,
