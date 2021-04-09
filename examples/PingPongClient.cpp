@@ -26,10 +26,12 @@ int main(int argc, char** argv)
 
     auto enterCallback = [tmp](const TcpConnection::Ptr& session) {
         session->setDataCallback([session](brynet::base::BasePacketReader& reader) {
-            session->send(reader.begin(), reader.size());
+            //session->send(reader.begin(), reader.size());
             reader.consumeAll();
         });
-        session->send(tmp);
+        session->getEventLoop()->runAfter(std::chrono::seconds(5), [=]() {
+            session->send(tmp);
+        });
     };
 
     auto failedCallback = []() {

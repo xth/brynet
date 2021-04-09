@@ -18,6 +18,7 @@
 #include <cstring>
 #include <deque>
 #include <functional>
+#include <iostream>
 #include <memory>
 #include <type_traits>
 
@@ -295,9 +296,11 @@ private:
     {
         if (mAlreadyClose)
         {
+            std::cout << "already close" << std::endl;
             return;
         }
 
+        std::cout << "ready send" << std::endl;
         const auto len = msg->size();
         mSendingMsgSize += len;
         mSendList.emplace_back(PendingPacket{
@@ -392,11 +395,6 @@ private:
         }
 #endif
 
-        if (!checkRead())
-        {
-            return false;
-        }
-
         mEventLoop->addTcpConnection(mSocket->getFD(), shared_from_this());
         causeEnterCallback();
 
@@ -474,6 +472,8 @@ private:
 
     void canRecv(const bool willClose) override
     {
+        std::cout << "receive can recv:" << willClose << std::endl;
+        return;
 #ifdef BRYNET_PLATFORM_WINDOWS
         mPostRecvCheck = false;
         if (mPostClose)
@@ -890,6 +890,7 @@ private:
             }
 
             const int send_len = writev(mSocket->getFD(), iov, static_cast<int>(num));
+            std::cout << "send_len:" << send_len << std::endl;
             if (send_len <= 0)
             {
                 if (BRYNET_ERRNO == BRYNET_EWOULDBLOCK)
@@ -940,6 +941,9 @@ private:
 
     void onClose() override
     {
+        std::cout << "onclose" << std::endl;
+        return;
+        std::cout << "what?" << std::endl;
         if (mAlreadyClose)
         {
             return;
@@ -1035,6 +1039,10 @@ private:
             });
 
             mIsPostFlush = true;
+        }
+        else
+        {
+            std::cout << "not send:" << mCanWrite << "," << mIsPostFlush << std::endl;
         }
     }
 #if defined BRYNET_PLATFORM_LINUX || defined BRYNET_PLATFORM_DARWIN

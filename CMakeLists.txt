@@ -41,9 +41,8 @@ install(DIRECTORY include/brynet
 option(brynet_BUILD_EXAMPLES "Build examples" OFF)
 option(brynet_BUILD_TESTS "Build test" OFF)
 
-if (brynet_BUILD_EXAMPLES)
+
   add_subdirectory(examples)
-endif(brynet_BUILD_EXAMPLES)
 
 if (brynet_BUILD_TESTS)
   if(WIN32)

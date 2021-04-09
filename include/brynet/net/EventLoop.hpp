@@ -173,7 +173,7 @@ public:
             if (event_data & EPOLLRDHUP)
             {
                 channel->canRecv(true);
-                channel->onClose();
+                //channel->onClose();
                 continue;
             }
 
