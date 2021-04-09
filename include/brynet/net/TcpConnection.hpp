@@ -890,7 +890,7 @@ private:
             }
 
             const int send_len = writev(mSocket->getFD(), iov, static_cast<int>(num));
-            std::cout << "send_len:" << send_len << std::endl;
+            std::cout << "send_len:" << send_len << ", ready_send_len:" << ready_send_len << std::endl;
             if (send_len <= 0)
             {
                 if (BRYNET_ERRNO == BRYNET_EWOULDBLOCK)

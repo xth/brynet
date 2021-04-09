@@ -361,6 +361,7 @@ private:
 #endif
     bool linkChannel(BrynetSocketFD fd, const Channel* ptr) BRYNET_NOEXCEPT
     {
+        return true;
 #ifdef BRYNET_PLATFORM_WINDOWS
         return CreateIoCompletionPort((HANDLE) fd, mIOCP, (ULONG_PTR) ptr, 0) != nullptr;
 #elif defined BRYNET_PLATFORM_LINUX
